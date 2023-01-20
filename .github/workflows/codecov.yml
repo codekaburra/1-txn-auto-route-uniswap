@@ -33,7 +33,7 @@ jobs:
             ${{ matrix.os }}-yarn-
 
       - run: yarn
-      # Runs a single command using the runners shell
+      - run: yarn compile
       - name: Codecov
         run: |
           yarn coverage
