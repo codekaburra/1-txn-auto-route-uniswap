@@ -25,7 +25,7 @@ async function checkGasUsed (transaction, config = {}) {
   }
 }
 
-const SKIP_EVENT_PARAM_CHECK = "SKIP"; // use this const for those unable to expect exact result's event param , checking will be skipped
+const SKIP_EVENT_PARAM_CHECK = "SKIP"; // use this const for those unable to expect exact result's event param, checking will be skipped
 async function expectEvent (transaction, eventName, param) {
   const transactionReceipt = await transaction.wait();
   for (const event of transactionReceipt.events) {

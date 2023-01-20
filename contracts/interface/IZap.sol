@@ -86,15 +86,15 @@ interface IZap {
 
     function getPathForTokenToToken(address _fromToken, address _toToken) external view returns (address[] memory);
 
-    function getAutoCalculatedPathWithIntermediateTokenForTokenToToken(address _fromToken, address _toToken)
-        external
-        view
-        returns (address[] memory);
+    function getAutoCalculatedPathWithIntermediateTokenForTokenToToken(
+        address _fromToken,
+        address _toToken
+    ) external view returns (address[] memory);
 
-    function getSuitableIntermediateTokenForTokenToLP(address _fromToken, address _toLP)
-        external
-        view
-        returns (address);
+    function getSuitableIntermediateTokenForTokenToLP(
+        address _fromToken,
+        address _toLP
+    ) external view returns (address);
 
     /* ========== Update Functions ========== */
     function fetchLiquidityPoolsFromFactory() external;
@@ -110,11 +110,7 @@ interface IZap {
 
     function removeIntermediateToken(address _intermediateTokenAddress) external;
 
-    function setPresetPath(
-        address _tokenA,
-        address _tokenB,
-        address[] memory _path
-    ) external;
+    function setPresetPath(address _tokenA, address _tokenB, address[] memory _path) external;
 
     function setPresetPathByAutoCalculation(address _tokenA, address _tokenB) external;
 

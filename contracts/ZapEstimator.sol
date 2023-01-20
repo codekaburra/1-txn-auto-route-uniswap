@@ -27,10 +27,7 @@ contract ZapEstimator is Ownable {
     ) external view returns (uint256) {
         require(zap.isToken(_tokenIn), "Zap:estimateSwapAmountOut: invalid _tokenIn Address");
         require(zap.isToken(_tokenOut), "Zap:estimateSwapAmountOut: invalid _tokenOut Address");
-        require(
-            zap.isLiquidityPoolExistInFactory(_tokenIn, _tokenOut),
-            "Zap:estimateSwapAmountOut: no such LP pair"
-        );
+        require(zap.isLiquidityPoolExistInFactory(_tokenIn, _tokenOut), "Zap:estimateSwapAmountOut: no such LP pair");
         return _estimateSwapAmountOut(_tokenIn, _tokenOut, _inputAmount);
     }
 
@@ -61,16 +58,7 @@ contract ZapEstimator is Ownable {
         address _fromToken,
         uint256 _inputAmount,
         address _LP
-    )
-        external
-        view
-        returns (
-            address[] memory,
-            uint256[] memory,
-            uint256,
-            uint256
-        )
-    {
+    ) external view returns (address[] memory, uint256[] memory, uint256, uint256) {
         address fromToken = _fromToken == address(0) ? zap.WETH() : _fromToken;
         require(zap.isLP(_LP), "Zap:estimateZapInToLpSwapPaths: invalid _LP Address");
         address token0 = IUniswapV2Pair(_LP).token0();
@@ -151,15 +139,7 @@ contract ZapEstimator is Ownable {
         address _fromLP,
         uint256 _inputAmount,
         address _toToken
-    )
-        external
-        view
-        returns (
-            uint256,
-            uint256,
-            uint256
-        )
-    {
+    ) external view returns (uint256, uint256, uint256) {
         uint256 outputAmount;
         require(zap.isLP(_fromLP), "Zap:estimateRemoveLiquidityOutputAmount: invalid _fromLP Address");
         (uint256 amount0, uint256 amount1) = _estimateRemoveLiquidityOutputAmount(_inputAmount, _fromLP);
@@ -195,11 +175,10 @@ contract ZapEstimator is Ownable {
     /// @param _liquidityAmount input LP amount
     /// @param _toLP target LP
     /// @return token0 amount and token1 amount accordingly
-    function estimateRemoveLiquidityOutputAmount(uint256 _liquidityAmount, address _toLP)
-        external
-        view
-        returns (uint256, uint256)
-    {
+    function estimateRemoveLiquidityOutputAmount(
+        uint256 _liquidityAmount,
+        address _toLP
+    ) external view returns (uint256, uint256) {
         require(zap.isLP(_toLP), "Zap:estimateRemoveLiquidityOutputAmount: invalid _toLP Address");
         return _estimateRemoveLiquidityOutputAmount(_liquidityAmount, _toLP);
     }
@@ -254,11 +233,10 @@ contract ZapEstimator is Ownable {
         return liquidity;
     }
 
-    function _estimateRemoveLiquidityOutputAmount(uint256 _liquidityAmount, address _toLP)
-        private
-        view
-        returns (uint256, uint256)
-    {
+    function _estimateRemoveLiquidityOutputAmount(
+        uint256 _liquidityAmount,
+        address _toLP
+    ) private view returns (uint256, uint256) {
         IUniswapV2Pair LP = IUniswapV2Pair(_toLP);
         uint256 _totalSupply = LP.totalSupply();
         uint256 amount0 = (_liquidityAmount * IERC20(LP.token0()).balanceOf(_toLP)) / _totalSupply;

@@ -857,7 +857,7 @@ contract("Zap", () => {
         [tokenZ, [tokenA, tokenB], weth], // no direct LP for intermediateToken1-tokenA intermediateToken1-tokenB
         [tokenA, [tokenA, tokenC], tokenA], // IntermediateToken is not necessary
         [tokenZ, [tokenA, tokenC], weth], // even if there is direct LP for intermediateToken1-tokenZ, weth is pick as it doesnt do path length comparison
-        [tokenZ, [weth, intermediateToken1], intermediateToken1], // both weth intermediateToken1 are IntermediateToken, but intermediateToken1 is pick because of intermediateToken1-tokenZ exist
+        [tokenZ, [weth, intermediateToken1], intermediateToken1], // both weth intermediateToken1 are IntermediateToken, but intermediateToken1 is picked because of intermediateToken1-tokenZ exist
       ]) {
         assert.deepEqual(
           await zap.getSuitableIntermediateTokenForTokenToLP(inputToken.address,
