@@ -11,3 +11,4 @@ coverage.json
 .env
 .idea
 scripts/local
+.DS_Store

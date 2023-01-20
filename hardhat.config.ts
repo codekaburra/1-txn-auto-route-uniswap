@@ -1,17 +1,10 @@
-require("dotenv").config();
-require("@nomiclabs/hardhat-ethers");
-require("solidity-coverage");
-require("hardhat-gas-reporter");
+import "@nomiclabs/hardhat-ethers";
+import "solidity-coverage";
+import "hardhat-gas-reporter";
+import { HardhatUserConfig } from "hardhat/config";
+import "@nomicfoundation/hardhat-toolbox";
 
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
-
-  for (const account of accounts) {
-    console.log(account.address);
-  }
-});
-
-module.exports = {
+const config: HardhatUserConfig = {
   // This is a sample solc configuration that specifies which version of solc to use
   solidity: {
     compilers: [
@@ -60,12 +53,8 @@ module.exports = {
     },
     localhost: {
       url: "http://127.0.0.1:8545",
-      network_id: "*",
-    },
-    test: {
-      url: "http://127.0.0.1:7545",
-      port: 7545,
-      network_id: "*",
     },
   },
 };
+
+export default config;

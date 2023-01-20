@@ -2,7 +2,6 @@ const { expectRevert } = require("@openzeppelin/test-helpers");
 const { assert, expect } = require("chai");
 const BigNumber = require("bignumber.js");
 BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_FLOOR, DECIMAL_PLACES: 0 });
-const MockERC20 = artifacts.require("MockERC20");
 const {
   checkGasUsed,
   SKIP_EVENT_PARAM_CHECK,
@@ -13,7 +12,7 @@ const {
 const { constants } = require("ethers");
 const { AddressZero } = require("@ethersproject/constants");
 const { MaxUint256 } = constants;
-contract("Zap", () => {
+describe("Zap", () => {
   const allowableSlippagePercent = 5;
   const maxGasUsed = 1000000;
   const isDebugMode = false;
@@ -118,7 +117,7 @@ contract("Zap", () => {
     await zap.addIntermediateToken(intermediateToken1.address);
   }
   async function createToken (name, symbol, totalSupply) {
-    const token = await MockERC20.new(name, symbol, `${totalSupply}`);
+    const token = await (await ethers.getContractFactory("MockERC20")).deploy(name, symbol, `${totalSupply}`);
     initializeTokenMap(symbol, token, token.address);
     return token;
   }
